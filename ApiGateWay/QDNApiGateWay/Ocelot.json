@@ -1,0 +1,55 @@
+{
+	"Routes": [
+		{
+			"UpstreamPathTemplate": "/apim/Logins/{everything}",
+			"DownstreamPathTemplate": "/api/Logins/{everything}",
+			"DownstreamScheme": "https",
+			"DownstreamHostAndPorts": [
+				{
+					"Host": "localhost",
+					"Port": 7229
+				}
+			],
+			"SwaggerKey": "Login"
+		},
+		{
+			"UpstreamPathTemplate": "/api/orders/{everything}",
+			"DownstreamPathTemplate": "/api/orders/{everything}",
+			"DownstreamScheme": "https",
+			"DownstreamHostAndPorts": [
+				{
+					"Host": "localhost",
+					"Port": 7002
+				}
+			],
+			"SwaggerKey": "orders"
+		}
+	],
+
+	"SwaggerEndPoints": [
+		{
+			"Key": "Login",
+			"Config": [
+				{
+					"Name": "Login Service",
+					"Version": "v1",
+					"Url": "https://localhost:7229/swagger/v1/swagger.json"
+				}
+			]
+		},
+		{
+			"Key": "orders",
+			"Config": [
+				{
+					"Name": "Order Service",
+					"Version": "v1",
+					"Url": "https://localhost:7002/swagger/v1/swagger.json"
+				}
+			]
+		}
+	],
+
+	"GlobalConfiguration": {
+		"BaseUrl": "https://localhost:5000"
+	}
+}

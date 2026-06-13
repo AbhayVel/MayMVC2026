@@ -1,0 +1,35 @@
+{
+	"Routes": [
+		{
+			"UpstreamPathTemplate": "/apim/Logins/{everything}",
+			"UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+
+			"DownstreamPathTemplate": "/api/Logins/{everything}",
+			"DownstreamScheme": "https",
+
+			"DownstreamHostAndPorts": [
+				{
+					"Host": "localhost",
+					"Port": 7229
+				}
+			]
+		},
+		{
+			"UpstreamPathTemplate": "/api/orders/{everything}",
+			"UpstreamHttpMethod": [ "GET", "POST" ],
+
+			"DownstreamPathTemplate": "/api/orders/{everything}",
+			"DownstreamScheme": "https",
+
+			"DownstreamHostAndPorts": [
+				{
+					"Host": "localhost",
+					"Port": 7002
+				}
+			]
+		}
+	],
+	"GlobalConfiguration": {
+		"BaseUrl": "https://localhost:5000"
+	}
+}
