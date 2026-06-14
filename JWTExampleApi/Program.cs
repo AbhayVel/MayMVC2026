@@ -1,10 +1,19 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 var jwtkey = "mysecretkey1234567890mysecretkey1234567890";
 // Add services to the container.
+
+//builder.Services.AddDbContext<JWTExampleApi.DataBaseCOntext.UserDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+
+builder.Services.AddDbContext<JWTExampleApi.DataBaseCOntext.UserDbContext>(options =>
+    options.UseInMemoryDatabase("UserDataBase"));
 
 builder.Services.AddControllers();
 
@@ -59,9 +68,48 @@ builder.Services.AddSwaggerGen((option) =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<JWTExampleApi.DataBaseCOntext.UserDbContext>();
+    dbContext.Database.EnsureCreated();
+
+    if (!dbContext.Roles.Any())
+    {
+        dbContext.Roles.Add(new JWTExampleApi.Entitties.Role
+        {
+            RoleName = "Admin"
+        });
+        dbContext.Roles.Add(new JWTExampleApi.Entitties.Role
+        {
+            RoleName = "User"
+        });
+        dbContext.SaveChanges();
+    }
+
+
+    if (!dbContext.Users.Any())
+    {
+        dbContext.Users.Add(new JWTExampleApi.Entitties.UserData
+        {
+            UserName = "admin",
+            Password = "password",
+            RoleID = 1
+        });
+        dbContext.Users.Add(new JWTExampleApi.Entitties.UserData
+        {
+            UserName = "user",
+            Password = "password",
+            RoleID = 2
+        });
+        dbContext.SaveChanges();
+    }
+
+      
+}
+
 // Configure the HTTP request pipeline.
- 
-    app.UseSwagger();
+
+app.UseSwagger();
     app.UseSwaggerUI();
 
 
