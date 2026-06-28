@@ -27,9 +27,9 @@ namespace JWTExampleApi.DataBaseCOntext
                     .WithMany()
                     .HasForeignKey(s => s.RoleID);
 
-            modelBuilder.Entity<Role>()
-            .HasMany(x => x.Users)
-            .WithOne(x => x.Role);
+            //modelBuilder.Entity<Role>()
+            //.HasMany(x => x.Users)
+            //.WithOne(x => x.Role);
 
 
             //modelBuilder.Entity<UserData>().Navigation(s => s.Role)

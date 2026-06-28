@@ -29,31 +29,9 @@ namespace JWTExampleApi.Controllers
         public UserAuthenticateionResponse Get()
         {
              var auth = new UserAuthentication();
-            var user = new UserData() {
-                UserName = "admin" };
+            
 
-
-            var users = UserDbContext.Users.Include(x=>x.Role).AsNoTracking().ToList();
-
-
-
-           var roleName= users.FirstOrDefault().Role.RoleName;
-
-            var userGet = users.First();
-
-            userGet.UserName = "adminNew";
-            UserDbContext.SaveChanges();
-            var users2 = UserDbContext.Users.Include(x => x.Role).AsNoTracking().ToList();
-
-            //UserDbContext.Users.Attach(userGet);
-            UserDbContext.Users.Entry(userGet).State= EntityState.Modified;
-            UserDbContext.SaveChanges();
-            var users3 = UserDbContext.Users.Include(x => x.Role).AsNoTracking().ToList();
-
-
-            DisplayStates(UserDbContext.ChangeTracker.Entries());
-            var Roles = UserDbContext.Roles.Include(x => x.Users).AsNoTracking().ToList();
-
+         
             return auth.Authenticate("admin", "password");
         }
 

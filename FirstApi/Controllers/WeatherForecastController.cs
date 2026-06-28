@@ -47,4 +47,5 @@ namespace FirstApi.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
+    }
 }

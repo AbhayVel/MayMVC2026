@@ -17,6 +17,6 @@ namespace JWTExampleApi.Entitties
         [Column("RoleName", TypeName = "Varchar(100)")]
         public string? RoleName { get; set; }
 
-        public List<UserData> Users { get; set; }
+       // public ICollection<UserData>? Users { get; set; }
     }
 }

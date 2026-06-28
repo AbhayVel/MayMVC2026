@@ -1,3 +1,6 @@
+using JWTExampleApi.Controllers;
+using JWTExampleApi.Repository;
+using JWTExampleApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +18,9 @@ var jwtkey = "mysecretkey1234567890mysecretkey1234567890";
 builder.Services.AddDbContext<JWTExampleApi.DataBaseCOntext.UserDbContext>(options =>
     options.UseInMemoryDatabase("UserDataBase"));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddXmlSerializerFormatters()
+    .AddXmlDataContractSerializerFormatters();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -65,6 +70,12 @@ builder.Services.AddSwaggerGen((option) =>
 
 });
 
+builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<BaseRepository>();
+
+builder.Services.AddKeyedScoped<BaseRepository, USerRepository>("user");
+
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 
@@ -83,6 +94,8 @@ using (var scope = app.Services.CreateScope())
         {
             RoleName = "User"
         });
+
+        //dbContext.Roles.Where(x=>x.ID==1).ExecuteUpdate(role => role.SetProperty(r => r.RoleName, r => r.RoleName.ToUpper()));
         dbContext.SaveChanges();
     }
 

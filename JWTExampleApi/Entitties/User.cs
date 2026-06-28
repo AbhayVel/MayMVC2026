@@ -26,9 +26,13 @@ namespace JWTExampleApi.Entitties
         public int RoleID { get; set; }
 
 
-        [Required]
+        //[Required]
       //  [ForeignKey("RoleID")]
        
-        public Role Role { get; set; }
+        public Role? Role { get; set; }
+
+
+        [NotMapped]
+        public int? MyProperty { get; set; }
     }
 }

@@ -530,7 +530,7 @@ using System.Text;
 
 //""
 
-Console.WriteLine(result);
+//Console.WriteLine(result);
 
 
 var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IlNheXUiLCJYWFgiOiJBZG1pbiIsIkFkZHJlc3MiOiJBZG1pbiIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc3OTYwMzQxNywiZXhwIjoxNzc5NjA3MDE3LCJpYXQiOjE3Nzk2MDM0MTcsImlzcyI6Im15SXNzdWVyIiwiYXVkIjoibXlBdWRpZW5jZSJ9.EmDkNSu_Yx3jbfHbh3ClLBGkh7oXdNqsghpKZdrgda8";
@@ -539,7 +539,7 @@ var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IlNheXUiLC
 //validate output of JIT with cache value of UUID and if it matches then allow access otherwise deny access and ask user to login again to generate new token with new role and update the cache with new UUID
 //when user role change then remove key of user from cache and when user login again then generate new token with new role and update the cache with new UUID
 
-Console.WriteLine(claimPrinsiple.Identity.Name);
+//Console.WriteLine(claimPrinsiple.Identity.Name);
 
 //foreach (var item in claimPrinsiple.Claims)
 //{
