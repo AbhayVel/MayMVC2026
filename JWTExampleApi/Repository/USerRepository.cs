@@ -29,5 +29,24 @@ namespace JWTExampleApi.Repository
             return result;
         }
 
-    }
+
+        public bool Save(UserData entity)
+        {
+            if(entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+            if(entity.Id == 0)
+            {
+                UserDbContext.Users.Add(entity);
+            }
+            else
+            {                               
+                UserDbContext.Users.Attach(entity).State = EntityState.Modified;
+            }
+            UserDbContext.SaveChanges();
+            return true;
+        }
+
+        }
 }

@@ -45,7 +45,7 @@ namespace JWTExampleApi.Mappers
                 Id = userDTO.Id,
                 UserName = userDTO.UserName,
                 Password = userDTO.Password,
-                RoleID = role.ID,
+                RoleID = role.Id,
                 Role = role
             };
         }
@@ -58,7 +58,7 @@ namespace JWTExampleApi.Mappers
                 return null;
             existingUser.UserName = userDTO.UserName;
             existingUser.Password = userDTO.Password;
-            existingUser.RoleID = role.ID;
+            existingUser.RoleID = role.Id;
             existingUser.Role = role;
             return existingUser;
         }

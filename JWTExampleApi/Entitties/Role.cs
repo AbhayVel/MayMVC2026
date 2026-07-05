@@ -5,13 +5,13 @@ namespace JWTExampleApi.Entitties
 {
 
     [Table("RoleTable")]
-    public class Role
+    public class Role  : IEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int ID { get; set; }
-
+        public int Id { get; set; }
+       
 
         [Required]
         [Column("RoleName", TypeName = "Varchar(100)")]

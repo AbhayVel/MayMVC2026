@@ -37,5 +37,59 @@ namespace JWTExampleApi.Repository
             return result;
         }
 
+
+
+        public bool Save<T>(T entity) where T : class  , IEntity
+        {
+
+            if(entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            if(entity.Id == 0)
+            {
+                UserDbContext.Set<T>().Add(entity);
+            }
+            else
+            {
+                UserDbContext.Set<T>().Attach(entity).State = EntityState.Modified;
+            }
+
+
+            UserDbContext.SaveChanges();
+
+
+
+
+            return true;
+        }
+
+
+        public bool Delete<T>(T entity) where T : class, IEntity
+        {
+
+
+            UserDbContext.Set<T>().Remove(entity);
+
+            UserDbContext.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteById<T>(int id) where T : class, IEntity
+        {
+
+           var entity= UserDbContext.Set<T>().Where(e => e.Id == id).FirstOrDefault();
+
+            if(entity == null)
+            {
+                return false;
+            }
+            UserDbContext.Set<T>().Remove(entity);
+            UserDbContext.SaveChanges();
+            return true;
+        }
+
+
     }
 }

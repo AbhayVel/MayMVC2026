@@ -3,9 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JWTExampleApi.Entitties
 {
+    public interface IEntity
+    {
+        int Id { get; set; }
+    }
 
     [Table("UserTable")]
-    public class UserData
+    public class UserData   : IEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
