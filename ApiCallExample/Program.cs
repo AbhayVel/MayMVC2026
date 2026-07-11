@@ -1,10 +1,25 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Polly;
+using Polly.Extensions.Http;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 var jwtkey = "mysecretkey1234567890mysecretkey1234567890";
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddHttpClient("MyApi", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7229/");
+})
+.AddPolicyHandler(GetRetryPolicy());
+
+builder.Services.AddHttpClient("MyApix", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7229/");
+})
+.AddPolicyHandler(GetRetryPolicy());
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -69,3 +84,19 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+{
+    return HttpPolicyExtensions
+        .HandleTransientHttpError() // 5xx, 408, HttpRequestException
+        .OrResult(msg => msg.StatusCode == HttpStatusCode.NotFound)
+        .WaitAndRetryAsync(
+            retryCount: 3,
+            sleepDurationProvider: retryAttempt =>
+                TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+            onRetry: (response, delay, retryCount, context) =>
+            {
+                Console.WriteLine($"Retry {retryCount} after {delay.TotalSeconds} seconds");
+            });
+}

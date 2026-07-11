@@ -31,6 +31,8 @@ namespace JWTExampleApi.Controllers
         [HttpGet]
         public IActionResult Get([FromServices] UserService userService, [FromServices] RoleService _roleService)
         {
+            var k = 1;
+            var j = 1 / k;
             var result = userService.GetAllUsers(); // Example usage of the UserDbContext
             return Ok(result);
         }
@@ -41,6 +43,9 @@ namespace JWTExampleApi.Controllers
          
         public IActionResult Post( [FromBody]   UserDTO userData)
         {
+
+            var k = 1;
+            var j = 1 / k;
              var entity = UserDataDTOMapper.MapToEntity(userData);
 
             var role = _USerRepository.GetAll<Role>((x)=>x.RoleName.Equals(userData.RoleName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
